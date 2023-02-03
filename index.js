@@ -4,8 +4,8 @@ const app = new express()
 const ejs = require('ejs')
 app.set('view engine', 'ejs')
 
-//const mongoose = require('mongoose')
-//mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true}
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true})
 
 app.use(express.static('public'))
 
