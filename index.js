@@ -1,27 +1,35 @@
 const express = require('express')
-const app = express()
 const path = require('path')
+const app = new express()
+//const ejs = require('ejs')
+//app.set('view engine', 'ejs')
+
+//const mongoose = require('mongoose')
+//mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true}
+
 app.use(express.static('public'))
-app.listen(3000, ()=>{
-    console.log("app listening on port 3000")
+
+app.listen(4000, ()=>{
+	console.log('App listening on port 4000')
 })
 
-app.get('/json',(req,res)=>{
-    res.json({
-	    name: 'El Hugo'
-	})
+app.get('/', (req,res)=>{
+    res.sendFile(path.resolve(__dirname, 'pages/index.html'))
+    //res.render('index')
 })
 
-app.get('/',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'index.html'))
+app.get('/about', (req,res)=>{
+//    res.render('about')
+    res.sendFile(path.resolve(__dirname, 'pages/about.html'))
 })
 
-app.get('/about',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'about.html'))
+app.get('/contact', (req,res)=>{
+//    res.render('contact')
+    res.sendFile(path.resolve(__dirname, 'pages/contact.html'))
 })
 
-app.get('/contact',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'contact.html'))
+app.get('/post', (req,res)=>{
+//    res.render('post')
+    res.sendFile(path.resolve(__dirname, 'pages/post.html'))
 })
-
 
