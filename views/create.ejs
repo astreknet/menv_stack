@@ -23,7 +23,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <p>Write a post!</p>
                         <div class="my-5">
-                            <form action="/post/store" method="POST">
+                            <form action="/post/store" method="POST" enctype="multipart/form-data">
                                 <div class="form-floating">
                                     <input class="form-control" id="title" name="title" type="text" placeholder="Enter the title..." data-sb-validations="required" />
                                     <label for="title">Title</label>
@@ -34,6 +34,12 @@
                                     <label for="body">Description</label>
                                     <div class="invalid-feedback" data-sb-feedback="body:required">Description is required.</div>
                                 </div>
+                                <div class="form-floating">
+	                                <div class="">
+	                                    <label>Image</label>
+	                                    <input type="file" class="form-control" id="image" name="image">
+	                                </div>
+	                            </div>   
                                 <br />
                                 <!-- Submit success message-->
                                 <!---->
