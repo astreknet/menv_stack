@@ -20,8 +20,12 @@ app.listen(4000, ()=>{
 	console.log('App listening on port 4000')
 })
 
-app.get('/', (req,res)=>{
-    res.render('index')
+app.get('/', async (req,res)=>{
+	const blogposts = await BlogPost.find({})
+	res.render('index',{
+        blogposts
+	});
+    console.log(blogposts)
 })
 
 app.get('/about', (req,res)=>{
@@ -32,18 +36,20 @@ app.get('/contact', (req,res)=>{
     res.render('contact')
 })
 
-app.get('/post', (req,res)=>{
-    res.render('post')
-})
-
 app.get('/post/new', (req,res)=>{
     res.render('create')
 })
 
-app.post('/post/store', async (req,res)=>{
-    // model creates a new doc with browser data
-    console.log(req.body)
-	await BlogPost.create(req.body,(error,blogpost) =>{
-	    res.redirect('/')
-	})    
+app.get('/post/:id', async (req,res)=>{
+    const blogpost = await BlogPost.findById(req.params.id)
+    res.render('post',{
+        blogpost
+    })
 })
+
+app.post('/post/store', async (req,res)=>{
+    console.log(req.body)
+	await BlogPost.create(req.body)
+	res.redirect('/')
+})
+
