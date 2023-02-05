@@ -16,6 +16,7 @@ const validateMiddleWare = (req,res,next)=>{
 	}    
 	next()
 }
+const newPostController = require('./controllers/newPost')
 
 app.set('view engine', 'ejs')
 
@@ -41,17 +42,8 @@ app.get('/', async (req,res)=>{
     console.log(blogposts)
 })
 
-app.get('/about', (req,res)=>{
-    res.render('about')
-})
 
-app.get('/contact', (req,res)=>{
-    res.render('contact')
-})
-
-app.get('/post/new', (req,res)=>{
-    res.render('create')
-})
+app.get('/post/new', newPostController)
 
 app.get('/post/:id', async (req,res)=>{
     const blogpost = await BlogPost.findById(req.params.id)
