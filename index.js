@@ -1,20 +1,33 @@
 const express = require('express')
 const path = require('path')
 const app = new express()
+const mongoose = require('mongoose')
 const ejs = require('ejs')
+const BlogPost = require('./models/BlogPost.js')
+const fileUpload = require('express-fileupload') 
+
+const customMiddleWare = (req,res,next)=>{
+	console.log('Custom middle ware called')
+	next()
+	}
+const validateMiddleWare = (req,res,next)=>{    
+	if(req.files == null || req.body.title == null){        
+	    return res.redirect('/post/new')
+	}    
+	next()
+}
+
 app.set('view engine', 'ejs')
 
-const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true})
 mongoose.set('strictQuery', false)
 
-const BlogPost = require('./models/BlogPost.js')
-
+app.use(customMiddleWare)
 app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded())
-
-
+app.use(fileUpload())
+app.use('/post/store',validateMiddleWare)
 
 app.listen(4000, ()=>{
 	console.log('App listening on port 4000')
@@ -47,9 +60,6 @@ app.get('/post/:id', async (req,res)=>{
     })
 })
 
-const fileUpload = require('express-fileupload') 
-app.use(fileUpload())
-
 app.post('/post/store', async (req,res)=>{
     let image = req.files.image;  
 	image.mv(path.resolve(__dirname,'public/img',image.name),async (error)=>{
@@ -61,4 +71,3 @@ app.post('/post/store', async (req,res)=>{
 	    res.redirect('/')
     })
 })
-
