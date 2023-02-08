@@ -3,6 +3,7 @@ const app = new express()
 const mongoose = require('mongoose')
 const ejs = require('ejs')
 const fileUpload = require('express-fileupload') 
+const expressSession = require('express-session') 
 
 const customMiddleWare = require("./middleware/customMiddleware")
 const validateMiddleWare = require("./middleware/validateMiddleware")
@@ -24,6 +25,9 @@ app.use(customMiddleWare)
 app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded())
+app.use(expressSession({
+    secret: 'keyboard cat'
+}))
 app.use(fileUpload())
 app.use('/post/store',validateMiddleWare)
 
