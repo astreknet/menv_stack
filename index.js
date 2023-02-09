@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const ejs = require('ejs')
 const fileUpload = require('express-fileupload') 
 const expressSession = require('express-session') 
+const flash = require('connect-flash')
 
 const customMiddleWare = require('./middleware/customMiddleware')
 const validateMiddleWare = require('./middleware/validateMiddleware')
@@ -39,6 +40,8 @@ app.use("*", (req, res, next) => {
 	loggedIn = req.session.userId; 
 	next()   
 })
+app.use(flash())
+
 
 app.listen(4000, ()=>{
 	console.log('App listening on port 4000')
