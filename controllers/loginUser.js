@@ -12,12 +12,14 @@ module.exports = (req, res) =>{
 	                res.redirect('/')
 	            }
 	            else{
-	                res.redirect('/auth/login')  
+	                console.log('wrong password')
+                    res.redirect('/auth/login')  
 	            }
 	        })
         }
 	    else{
-	        res.redirect('/auth/login')
+            console.log('wrong user')
+            res.redirect('/auth/login')
 	    }
 	})
 }
